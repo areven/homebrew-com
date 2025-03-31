@@ -1,0 +1,13 @@
+# ==============================================================================
+# OS files
+# ==============================================================================
+# Modern operating systems love to create a mess and we have to ignore it.
+
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+*.nosync
+desktop.ini
+ehthumbs.db
+Thumbs.db
