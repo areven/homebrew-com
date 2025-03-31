@@ -1,0 +1,34 @@
+# ==============================================================================
+# Tap sync
+# ==============================================================================
+# This workflow keeps the tap in sync with the published artifacts
+
+name: Tap sync
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */3 * * *'
+
+concurrency:
+  group: ${{ github.workflow }}/${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sync-artifacts:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup git user
+        run: |
+          git config --global user.name "Areven Bot"
+          git config --global user.email "bot@areven.com"
+      - name: Download artifacts
+        run: |
+          curl -fsS -o volto.rb https://artifacts.areven.com/volto/latest/volto.rb
+      - name: Commit and push if there are changes
+        run: |
+          git add .
+          git diff --staged --quiet && echo "No changes" || (git commit -m "chore: sync artifacts" && git push)
