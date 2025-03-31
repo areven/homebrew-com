@@ -27,7 +27,7 @@ jobs:
           git config --global user.email "bot@areven.com"
       - name: Download artifacts
         run: |
-          curl -fsS -o volto.rb https://artifacts.areven.com/volto/latest/volto.rb
+          curl -fsS -o Casks/volto.rb https://artifacts.areven.com/volto/latest/volto.rb
       - name: Commit and push if there are changes
         run: |
           git add .
