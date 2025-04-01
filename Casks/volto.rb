@@ -1,6 +1,6 @@
 cask "volto" do
-  version "0.2.1"
-  sha256 "b1d2c9dca0c10b4564fa84e17c6868fab334e3350ab6370695e01cf711d50298"
+  version "0.2.2"
+  sha256 "336afe2a04ede0aba54353490848758af837910b9a99ca117067796772ab7bf3"
 
   url "https://artifacts.areven.com/volto/#{version}/Volto.dmg"
   name "Volto"
@@ -12,8 +12,22 @@ cask "volto" do
 
   app "Volto.app"
 
-  uninstall launchctl:  "com.areven.volto.daemon",
-            quit:       "com.areven.volto",
+  livecheck do
+    url "https://artifacts.areven.com/volto/appcast.xml"
+    strategy :sparkle, &:version
+  end
+
+  postflight do
+    begin
+      ohai "Removing the quarantine flag"
+      system_command "/usr/bin/xattr", args: ["-rd", "com.apple.quarantine", "#{staged_path}/Volto.app"]
+    rescue => e
+      opoo "Failed to remove the quarantine flag: #{e.message}"
+    end
+  end
+
+  uninstall quit:       "com.areven.volto",
+            launchctl:  "com.areven.volto.daemon",
             login_item: "Volto.app"
 
   zap trash: [
