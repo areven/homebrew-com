@@ -1,6 +1,6 @@
 cask "volto" do
-  version "0.1.0"
-  sha256 "96c09a9817403298a6ab501ee4ad2025303cf6faac8a9ae7c4fc076066a4af8d"
+  version "0.2.1"
+  sha256 "b1d2c9dca0c10b4564fa84e17c6868fab334e3350ab6370695e01cf711d50298"
 
   url "https://artifacts.areven.com/volto/#{version}/Volto.dmg"
   name "Volto"
