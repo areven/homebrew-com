@@ -1,6 +1,6 @@
 cask "volto" do
-  version "0.4.0"
-  sha256 "58d9cf5d85cc4ba06875fc127fb81037622a248b74e4fb23ae83e7cedfd32dca"
+  version "0.4.1"
+  sha256 "89eabab931c2899f032d9393514270e4e9c4ee2822beef770eed32d38f089049"
 
   url "https://artifacts.areven.com/volto/#{version}/Volto.dmg"
   name "Volto"
@@ -35,15 +35,20 @@ cask "volto" do
   end
 
   uninstall signal: [
-              ['TERM', 'com.areven.volto'],
-              ['KILL', 'com.areven.volto']
+              ['TERM', 'com.areven.volto'], # try gracefully
+              ['KILL', 'com.areven.volto'] # use a hammer
             ],
             launchctl: "com.areven.volto.daemon",
             login_item: "Volto"
 
   zap delete: [
-    "~/Library/Preferences/com.areven.volto.plist",
-    "~/Library/Caches/com.areven.volto",
-    "/Library/Application Support/Areven/Volto"
-  ]
+        "~/Library/Preferences/com.areven.volto.plist",
+        "~/Library/Caches/com.areven.volto",
+        "/Library/Application Support/Areven/Volto"
+      ],
+      script: { # bust macos defaults cache
+        executable: "/usr/bin/defaults",
+        args: ["delete", "com.areven.volto"],
+        sudo: false
+      }
 end
