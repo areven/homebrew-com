@@ -1,6 +1,6 @@
 cask "volto" do
-  version "0.5.0"
-  sha256 "7a66880e49e7345f61d50ffaa3a8f495f1ba61928ec049dc94cc138fea1b8da0"
+  version "0.6.0"
+  sha256 "98696907e3a52bc2a5e4f7fee22fe08d8b0034c17dcaa9880255e56a8f3cbce7"
 
   url "https://artifacts.areven.com/volto/#{version}/Volto.dmg"
   name "Volto"
@@ -44,7 +44,8 @@ cask "volto" do
   zap delete: [
         "~/Library/Preferences/com.areven.volto.plist",
         "~/Library/Caches/com.areven.volto",
-        "/Library/Application Support/Areven/Volto"
+        "~/Library/HTTPStorages/com.areven.volto",
+        "/Library/Application Support/Areven/Volto",
       ],
       script: { # bust macos defaults cache
         executable: "/usr/bin/defaults",
